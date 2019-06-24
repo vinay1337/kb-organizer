@@ -4,8 +4,9 @@ const {
     shell,
     ipcMain
 } = require('electron');
-const fs = require('fs');
+const fs = require('fs-extra');
 const csv = require('csv-parser');
+const spawn = require('child_process').spawn;
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -13,7 +14,10 @@ let win
 let KBIDs = [];
 let names = [];
 let count = 0;
-const path = '\\\\FS-LS-2\\IT Department\\KB PDF2HTML\\'
+const path = '\\\\FS-LS-2\\IT Department\\KB PDF2HTML\\';
+const scriptPath = path + 'Scripts\\HTML-Beauti.py';
+let organized = false;
+let python
 
 function createWindow() {
     // Create the browser window.
@@ -55,16 +59,62 @@ function createWindow() {
             }
         })
         .on('end', () => {
-            console.log('CSV file successfully processed\n');
+            console.log('CSV file parsed successfully\n');
         });
 }
 
 //Organizing happens here when button is clicked
 ipcMain.on('GO', (event, arg) => {
     for(i = 0; i < count; i++){
-        console.log(KBIDs[i],names[i]);
+
+        //Move html file
+        oldHTML = path + 'HTMLs\\' + names[i] + '.html'; //  \\FS-LS-2\IT Department\KB PDF2HTML\HTMLs\[kbarticlename].html
+        newHTML = path + 'Organized\\' + KBIDs[i] + '\\' + names[i] + '.html' // \\FS-LS-2\IT Department\KB PDF2HTML\Organized\[KBID]\[kbariclename].html
+        console.log('moving file from', oldHTML);
+        console.log('to', newHTML);
+
+        fs.mkdirpSync(path + 'Organized\\' + KBIDs[i]);
+        fs.copySync(oldHTML, newHTML);
+
+
+        //Move images folder 
+        oldDir = path + 'HTMLs\\' + names[i];
+        newDir = path + 'Organized\\' + KBIDs[i] + '\\' + names[i]
+        console.log('moving folder from', oldDir);
+        console.log('to', newDir);
+        
+        fs.copySync(oldDir, newDir);
+
     }
+    //Tell renderer that organization is complete
+    event.reply('STOP', 1337);
+    organized = true;
+    beautipy();
 });
+
+function beautipy(){
+
+    let pyargs = [scriptPath];
+    KBIDs.forEach(function(id){
+        pyargs.push(id.toString());
+    });
+
+    console.log(pyargs);
+
+    console.log('Running HTML-beauti.py...');
+    python = spawn('python', pyargs);
+
+    python.stdout.on('data', (data) => {
+        console.log(`stdout: ${data}`);
+    });
+
+    python.on('exit', (code) => {
+        console.log(`HTML-beauti.py completed`);
+        console.log('exiting...');
+        app.quit();
+    });
+}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

@@ -7,10 +7,14 @@ const {
 } = require('electron')
 
 document.getElementById('btn').addEventListener('click', function () {
-    var btn = document.getElementById('btn');
-    btn.parentNode.removeChild(btn);
-    //document.getElementById('btn').style.display = 'none';
+    // var btn = document.getElementById('btn');
+    // btn.parentNode.removeChild(btn);
+    document.getElementById('btn').style.display = 'none';
     document.getElementById('gif').style.display = 'block';
     document.getElementById('loadtext').innerHTML = 'working...'
-    ipcRenderer.send('GO', 9001);
+    ipcRenderer.send('GO', 1337);
+});
+
+ipcRenderer.on('STOP', (event, arg) => {
+    document.getElementById('loadtext').innerHTML = 'Running HTML-beauti.py...'
 });
