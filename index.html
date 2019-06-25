@@ -61,13 +61,16 @@
         #close{
             display: none;
             margin: auto;
+            font-size: 12px;
+            width: 120px;
+            height: auto;
         }
     </style>
 </head>
 
 <body>
     <div class='page'>
-        <h1>KB Organizer</h1>
+        <h1>KB Organizer & HTML Cleaner</h1>
         <div class='container'>
             <p class='desc'>
                 <span>&gt;&nbsp;</span> sorts KBs in &nbsp;<b>\\FS-LS-2\IT Department\KB PDF2HTML\HTMLs</b><br />
@@ -75,9 +78,10 @@
                 <span>&gt;&nbsp;</span> based on &nbsp;<b>\\FS-LS-2\IT Department\KB PDF2HTML\legend.csv</b></p>
         </div>
         <br />
-        <input class='btn' type='button' id='btn' value='Organize KBs'>
+        <input class='btn' type='button' id='btn' value='Start'>
         <p id='loadtext'></p>
         <img src='loading.gif' class='gif' id='gif' />
+        <br/>
         <input class='btn' type='button' id='close' value='Close'>
     </div>
     <script>

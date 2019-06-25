@@ -101,19 +101,20 @@ function beautipy(event){
     let pyargs = [scriptPath];
     KBIDs.forEach(function(id){
         pyargs.push(id.toString());
+        console.log(id);
     });
 
-    console.log(pyargs);
+    //console.log(pyargs);
 
     console.log('Running HTML-beauti.py...');
     python = spawn('python', pyargs);
 
     python.stdout.on('data', (data) => {
-        console.log(`stdout: ${data}`);
+        console.log(`${data}`);
     });
 
     python.on('exit', (code) => {
-        console.log(`HTML-beauti.py completed`);
+        console.log('HTML-beauti.py completed');
         console.log('exiting...');
         //app.quit();
         event.reply('FINISHED', 1337);
