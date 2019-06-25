@@ -15,7 +15,7 @@ let KBIDs = [];
 let names = [];
 let count = 0;
 const path = '\\\\FS-LS-2\\IT Department\\KB PDF2HTML\\';
-const scriptPath = path + 'Scripts\\HTML-Beauti.py';
+const scriptPath = path + 'Scripts\\HTML-beauti.py\\HTML-Beauti.py';
 let organized = false;
 let python
 
