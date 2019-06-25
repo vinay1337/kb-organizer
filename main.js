@@ -63,6 +63,10 @@ function createWindow() {
         });
 }
 
+ipcMain.on('CLOSE', (event, arg) => {
+    app.quit();
+});
+
 //Organizing happens here when button is clicked
 ipcMain.on('GO', (event, arg) => {
     for(i = 0; i < count; i++){
@@ -89,10 +93,10 @@ ipcMain.on('GO', (event, arg) => {
     //Tell renderer that organization is complete
     event.reply('STOP', 1337);
     organized = true;
-    beautipy();
+    beautipy(event);
 });
 
-function beautipy(){
+function beautipy(event){
 
     let pyargs = [scriptPath];
     KBIDs.forEach(function(id){
@@ -111,7 +115,8 @@ function beautipy(){
     python.on('exit', (code) => {
         console.log(`HTML-beauti.py completed`);
         console.log('exiting...');
-        app.quit();
+        //app.quit();
+        event.reply('FINISHED', 1337);
     });
 }
 
