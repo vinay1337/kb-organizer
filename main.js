@@ -64,6 +64,7 @@ function createWindow() {
 }
 
 ipcMain.on('CLOSE', (event, arg) => {
+    shell.openItem(path + 'Organized\\');
     app.quit();
 });
 
