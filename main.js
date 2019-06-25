@@ -43,7 +43,7 @@ function createWindow() {
     })
 
     //Read legend.csv
-    fs.createReadStream(path + 'legend.csv')
+    fs.createReadStream(path + 'Data\\legend.csv')
         .pipe(csv(['KBID','docName']))
         .on('data', (row) => { //Called once per line in the CSV
             let fullname = row.docName;
