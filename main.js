@@ -79,7 +79,9 @@ ipcMain.on('GO', (event, arg) => {
         console.log('to', newHTML);
 
         fs.mkdirpSync(path + 'Organized\\' + KBIDs[i]);
-        fs.copySync(oldHTML, newHTML);
+        if (fs.existsSync(oldHTML)) {
+            fs.copySync(oldHTML, newHTML);
+        }
 
 
         //Move images folder 
@@ -88,7 +90,10 @@ ipcMain.on('GO', (event, arg) => {
         console.log('moving folder from', oldDir);
         console.log('to', newDir);
         
-        fs.copySync(oldDir, newDir);
+        
+        if (fs.existsSync(oldDir)) {
+            fs.copySync(oldDir, newDir);
+        }
 
     }
     //Tell renderer that organization is complete
