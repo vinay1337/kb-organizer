@@ -49,17 +49,27 @@
             background-color: #202020;
             margin: 10px auto;
             width: 400px;
-            padding: 3px;
+            padding: 10px 10px;
             text-align: left;
+        }
+
+        .bottom {
+            position: absolute;
+            bottom: 5px;
+            right: 20px;
+            text-align: left;
+            color: white;
         }
 
         span {
             color: white;
         }
-        #loadtext{
+
+        #loadtext {
             color: white;
         }
-        #close{
+
+        #close {
             display: none;
             margin: auto;
             font-size: 12px;
@@ -82,8 +92,11 @@
         <input class='btn' type='button' id='btn' value='Start'>
         <p id='loadtext'></p>
         <img src='loading.gif' class='gif' id='gif' />
-        <br/>
+        <br />
         <input class='btn' type='button' id='close' value='Close'>
+        <div class='bottom'>
+            <p>Made by Vinay janardhanam</p>
+        </div>
     </div>
     <script>
         // You can also require other files to run in this process
